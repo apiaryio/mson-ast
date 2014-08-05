@@ -5,7 +5,7 @@ This document defines serialization formats for [MSON](https://github.com/apiary
 
 - **Version**: 1.0
 - **Created**: 2014-07-31
-- **Updated**: 2014-07-31
+- **Updated**: 2014-08-04
 
 ## Media Types
 Base type media type is `application/vnd.mson.ast`.
@@ -18,13 +18,31 @@ Two supported, feature-equal serialization formats are JSON and YAML:
 
 ## AST Serialization
 
-### Property ([Element]())
+### Element Object
+Element (item) of a MSON array.
+
+- `description` (string) - Markdown-formatted description of the property
+- `values` (array)
+    - [Value]()
+
+#### Example
+
+```json
+{
+    "description": "User-defined tag for the product",
+    "type": "string",
+    "values": null,
+}
+```
+
+### Property Object
 Property (member) of a MSON object. Inherits from element.
 
 - `name` (string, required) - Name of the property
 - `required` (bool) - Boolean flag to denote required (`true`) or optional (`false`) property
 
-    Note: The optional (`false`) is the default.
+    The default is `false` (_optional_ property)
+- Inherits [Element]()
 
 #### Example
 
@@ -34,14 +52,13 @@ Property (member) of a MSON object. Inherits from element.
     "required": true,
     "description": "The unique identifier for a product",
     "type": "number",
-    "value": null,
+    "values": null,
 }
 ```
 
-### Element
-Element (item) of a MSON array.
+### Value Object
+Value of an MSON element (or a property).
 
-- `description` (string) - Markdown-formatted description of the property
 - `type` (string) - The data type of the property
 
     The type value must be of one of the following:
@@ -52,114 +69,151 @@ Element (item) of a MSON array.
     - `array`
     - `bool` or `boolean`
 
-- [`Value`]() - The value of the element
+- `v` (required) - The actual value of the element or property
 
-#### Example
+    - One of
 
-```json
-{
-    "description": "User-defined tag for the product",
-    "type": "string",
-    "value": null,
-}
-```
+        - (string) - The value represeneted as a string
+        - (array) - The value represented as an array of elements or properties
 
-### Value
-Value of an MSON element (or a property). Note the value is an object whith for the future-compatibility.
+            Note: In addition to type introspection the type of values stored in the array can be also inferred from the `type` porperty of the parent element.
 
-- `v` (required, one of) - The actual value of the element or property
-    - (object) - Value represented as an object with properties
-        - [Property]()
-    - (array) - Value represented as an array with elements
-        - [Element]()
-    - (string) - Value represeneted as a string
+            - One of
+
+                - [Element]()
+                - [Property]()
 
 #### Examples
 
+##### String Value
+
 ```json
 {
+    "type": "number",
     "v": "1"
 }
 ```
 
 ```json
 {
+    "type": "string",
     "v": "home"
 }
 ```
 
+##### Array Value (Object Data Type)
+
 ```json
 {
+    "type": "object",
     "v": [
         {
-            "type": "number",
-            "value": {
-                "v": "1"
-            }
-        },
-        {
-            "type": "number",
-            "value": {
-                "v": "2"
-            }
+            "name": "id",
+            "required": true,
+            "description": "The unique identifier for a product",
+            "values": [
+                {
+                    "type": "number",            
+                    "v": "1"
+                }
+            ]
         }
     ]   
 }
 ```
 
+##### Array Value (Array Data Type)
+
 ```json
 {
+    "type": "array",
+    "v": [
+        {
+            "description": null,
+            "values": [ 
+                {
+                    "type": null,
+                    "v": "home"
+                }
+            ]
+        },
+        {
+            "description": null,
+            "values": [ 
+                {
+                    "type": null,
+                    "v": "green"
+                }
+            ]
+        }
+    ]   
+}
+```
+
+##### Complex Example
+
+```json
+{
+    "type": "object"
     "v": [
         {
             "name": "id",
-            "required": true,            
+            "required": true,
             "description": "The unique identifier for a product",
-            "type": "number",
-            "value": {
-                "v": "1"
-            }
+            "values": [
+                {
+                    "type": "number",
+                    "v": "1"
+                }
+            ]
         },
         {
             "name": "name",
             "required": false,
             "description": "Name of the product",
-            "type": "string",
-            "value": {
-                "v": "A green door"
-            }
+            "values": [
+                {
+                    "type": "string",
+                    "v": "A green door"
+                }
+            ]
         },
         {
             "name": "price",
             "required": false,
             "description": null,
-            "type": null,
-            "value": {
-                "v": "12.50"
-            }
+            "values": [
+                {
+                    "type": null,
+                    "v": "12.50"
+                }
+            ]
         },
         {
             "name": "tags",
             "required": false,
             "description": null,
-            "type": "array",
-            "value": {
-                "v": [
-                    {
-                        "description": null,
-                        "type": null,
-                        "value": {
-                            "v": "home"
+            "values": [
+                {
+                    "type": "array",
+                    "v": [
+                        {
+                            "description": null,
+                            "value": {
+                                "type": null,
+                                "v": "home"
+                            }
+                        },
+                        {
+                            "description": null,
+                            "value": {
+                                "type": null,
+                                "v": "green"
+                            }
                         }
-                    },
-                    {
-                        "description": null,
-                        "type": null,
-                        "value": {
-                            "v": "home"
-                        }
-                    }
-                ]
-            }
+                    ]
+                }
+            ]
         }  
     ]
 }
