@@ -23,7 +23,7 @@ Element (item) of a MSON array.
 
 - `description` (string) - Markdown-formatted description of the property
 - `values` (array)
-    - [Value]()
+    - [Value](https://github.com/apiaryio/mson-ast#value-object)
 
 #### Example
 
@@ -42,12 +42,12 @@ Property (member) of a MSON object. Inherits from element.
 - `required` (bool) - Boolean flag to denote required (`true`) or optional (`false`) property
 
     The default is `false` (_optional_ property)
-- Inherits [Element]()
+- Inherits [Element](https://github.com/apiaryio/mson-ast#element-object)
 
 #### Example
 
 ```json
-{ 
+{
     "name": "id",
     "required": true,
     "description": "The unique identifier for a product",
@@ -80,8 +80,8 @@ Value of an MSON element (or a property).
 
             - One of
 
-                - [Element]()
-                - [Property]()
+                - [Element](https://github.com/apiaryio/mson-ast#element-object)
+                - [Property](https://github.com/apiaryio/mson-ast#property-object)
 
 #### Examples
 
@@ -113,12 +113,12 @@ Value of an MSON element (or a property).
             "description": "The unique identifier for a product",
             "values": [
                 {
-                    "type": "number",            
+                    "type": "number",
                     "v": "1"
                 }
             ]
         }
-    ]   
+    ]
 }
 ```
 
@@ -130,7 +130,7 @@ Value of an MSON element (or a property).
     "v": [
         {
             "description": null,
-            "values": [ 
+            "values": [
                 {
                     "type": null,
                     "v": "home"
@@ -139,14 +139,14 @@ Value of an MSON element (or a property).
         },
         {
             "description": null,
-            "values": [ 
+            "values": [
                 {
                     "type": null,
                     "v": "green"
                 }
             ]
         }
-    ]   
+    ]
 }
 ```
 
@@ -214,7 +214,7 @@ Value of an MSON element (or a property).
                     ]
                 }
             ]
-        }  
+        }
     ]
 }
 ```
