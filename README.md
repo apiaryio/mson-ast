@@ -47,7 +47,7 @@ Property (member) of a MSON object. Inherits from element.
 #### Example
 
 ```json
-{ 
+{
     "name": "id",
     "required": true,
     "description": "The unique identifier for a product",
@@ -73,7 +73,7 @@ Value of an MSON element (or a property).
 
     - One of
 
-        - (string) - The value represeneted as a string
+        - (string) - The value represented as a string
         - (array) - The value represented as an array of elements or properties
 
             Note: In addition to type introspection the type of values stored in the array can be also inferred from the `type` porperty of the parent element.
@@ -113,12 +113,12 @@ Value of an MSON element (or a property).
             "description": "The unique identifier for a product",
             "values": [
                 {
-                    "type": "number",            
+                    "type": "number",
                     "v": "1"
                 }
             ]
         }
-    ]   
+    ]
 }
 ```
 
@@ -130,7 +130,7 @@ Value of an MSON element (or a property).
     "v": [
         {
             "description": null,
-            "values": [ 
+            "values": [
                 {
                     "type": null,
                     "v": "home"
@@ -139,14 +139,14 @@ Value of an MSON element (or a property).
         },
         {
             "description": null,
-            "values": [ 
+            "values": [
                 {
                     "type": null,
                     "v": "green"
                 }
             ]
         }
-    ]   
+    ]
 }
 ```
 
@@ -214,7 +214,7 @@ Value of an MSON element (or a property).
                     ]
                 }
             ]
-        }  
+        }
     ]
 }
 ```
