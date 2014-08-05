@@ -5,7 +5,7 @@ This document defines serialization formats for [MSON](https://github.com/apiary
 
 - **Version**: 1.0
 - **Created**: 2014-07-31
-- **Updated**: 2014-08-04
+- **Updated**: 2014-08-05
 
 ## Media Types
 Base type media type is `application/vnd.mson.ast`.
@@ -19,202 +19,163 @@ Two supported, feature-equal serialization formats are JSON and YAML:
 ## AST Serialization
 
 ### Element Object
-Element (item) of a MSON array.
 
-- `description` (string) - Markdown-formatted description of the property
-- `values` (array)
-    - [Value]()
+- `description` (string) - Description of the value
+- One of
+    - `primitive`
 
-#### Example
+        - `type` (string) - The data type of the property
 
-```json
-{
-    "description": "User-defined tag for the product",
-    "type": "string",
-    "values": null,
-}
-```
+            The type value must be of one of the following:
 
-### Property Object
-Property (member) of a MSON object. Inherits from element.
+            - `string`
+            - `number`
+            - `object`
+            - `array`
+            - `bool` or `boolean`
 
-- `name` (string, required) - Name of the property
-- `required` (bool) - Boolean flag to denote required (`true`) or optional (`false`) property
-
-    The default is `false` (_optional_ property)
-- Inherits [Element]()
-
-#### Example
-
-```json
-{
-    "name": "id",
-    "required": true,
-    "description": "The unique identifier for a product",
-    "type": "number",
-    "values": null,
-}
-```
-
-### Value Object
-Value of an MSON element (or a property).
-
-- `type` (string) - The data type of the property
-
-    The type value must be of one of the following:
-
-    - `string`
-    - `number`
-    - `object`
-    - `array`
-    - `bool` or `boolean`
-
-- `v` (required) - The actual value of the element or property
-
-    - One of
-
-        - (string) - The value represented as a string
-        - (array) - The value represented as an array of elements or properties
-
-            Note: In addition to type introspection the type of values stored in the array can be also inferred from the `type` porperty of the parent element.
+        - `value` - The actual value of the element
 
             - One of
 
-                - [Element]()
-                - [Property]()
+                - (string) - The value represented as a string
+                - (array) - The value represented as an array of elements or properties
 
-#### Examples
+                    Note: In addition to type introspection the type of values stored in the array, the type can be also inferred from the `type` porperty of the parent element.
 
-##### String Value
+                    - Elements
 
-```json
-{
-    "type": "number",
-    "v": "1"
-}
+                        - One of
+
+                            - ([Element]())
+                            - ([Property]())
+
+    - `oneOf` (array) - The choice of values for the element
+
+        - One of
+
+            - ([Element]())
+            - ([Property]())
+
+    - `ref` (string) - Reference to another element's value
+
+
+### Property Object
+
+- `name` (string, required) - Name of the property
+- `required` (bool) - Boolean flag to denote required (`true`) or optional (`false`) property
+- `templated` (bool) - Boolean flag to denote whether the name is a variable (`true`) or not (`false`)
+- Inherits [Element]()
+
+## AST Model
+![AST Model Diagram](https://raw.githubusercontent.com/apiaryio/mson-ast/master/assets/astmodel.png)
+
+## Example
+
+### MSON
+
+```
+# Object
+Hello World!
+
+## Attributes
+- id: 42 (number, required) - lorem ipsum
+- One of
+    - a: good
+    - b: bad
+- Inherits [Another]()
+- mixed_feelings
+    - One of
+        - (number)
+        - (string)
+- vector (array)
+    - 1
+    - 2
+    - 3
 ```
 
-```json
-{
-    "type": "string",
-    "v": "home"
-}
-```
-
-##### Array Value (Object Data Type)
+### MSON AST
+`application/vnd.mson.ast+json`
 
 ```json
 {
-    "type": "object",
-    "v": [
-        {
-            "name": "id",
-            "required": true,
-            "description": "The unique identifier for a product",
-            "values": [
-                {
+    "name": "Object",
+    "description": "Hello World!",
+    "primitive" : {
+        "type": "object",
+        "value": [
+            {
+                "name": "id",
+                "required": true,
+                "description": "description",
+                "primitive" : {
                     "type": "number",
-                    "v": "1"
+                    "value": "42"
                 }
-            ]
-        }
-    ]
-}
-```
-
-##### Array Value (Array Data Type)
-
-```json
-{
-    "type": "array",
-    "v": [
-        {
-            "description": null,
-            "values": [
-                {
-                    "type": null,
-                    "v": "home"
-                }
-            ]
-        },
-        {
-            "description": null,
-            "values": [
-                {
-                    "type": null,
-                    "v": "green"
-                }
-            ]
-        }
-    ]
-}
-```
-
-##### Complex Example
-
-```json
-{
-    "type": "object"
-    "v": [
-        {
-            "name": "id",
-            "required": true,
-            "description": "The unique identifier for a product",
-            "values": [
-                {
-                    "type": "number",
-                    "v": "1"
-                }
-            ]
-        },
-        {
-            "name": "name",
-            "required": false,
-            "description": "Name of the product",
-            "values": [
-                {
-                    "type": "string",
-                    "v": "A green door"
-                }
-            ]
-        },
-        {
-            "name": "price",
-            "required": false,
-            "description": null,
-            "values": [
-                {
-                    "type": null,
-                    "v": "12.50"
-                }
-            ]
-        },
-        {
-            "name": "tags",
-            "required": false,
-            "description": null,
-            "values": [
-                {
+            },
+            {
+                "oneOf" : [
+                    {
+                        "name": "a",
+                        "required": false,
+                        "primitive" : {
+                            "value": "good"
+                        }
+                    },
+                    {
+                        "name": "b",
+                        "required": false,
+                        "primitive" : {
+                            "value": "bad"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "reference": "Another"
+            },
+            {
+                "name": "mixed_feelings",
+                "required": false,
+                "oneOf" : [
+                    {
+                        "primitive" : {
+                            "type": "number",
+                        }
+                    },
+                    {
+                        "primitive" : {
+                            "type": "string",
+                        }
+                    },
+                ]
+            }
+            {
+                "name": "vector",
+                "required": false,
+                "primitive" : {
                     "type": "array",
-                    "v": [
+                    "value": [
                         {
-                            "description": null,
-                            "value": {
-                                "type": null,
-                                "v": "home"
+                            "primitive" : {
+                                "value": "1"
                             }
                         },
                         {
-                            "description": null,
-                            "value": {
-                                "type": null,
-                                "v": "green"
+                            "primitive" : {
+                                "value": "2"
+                            }
+                        },
+                        {
+                            "primitive" : {
+                                "value": "3"
                             }
                         }
                     ]
                 }
-            ]
-        }
-    ]
+            }
+        ]
+    }
 }
+
 ```
