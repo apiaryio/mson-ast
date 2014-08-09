@@ -21,44 +21,41 @@ Two supported, feature-equal serialization formats are JSON and YAML:
 ### Element Object
 
 - `description` (string) - Description of the value
-- One of
-    - `primitive`
+- `primitive` - Primitive data type value for the element
+    - `type` (string) - The data type of the element value
 
-        - `type` (string) - The data type of the property
+        The type value must be of one of the following:
 
-            The type value must be of one of the following:
+        - `string`
+        - `number`
+        - `object`
+        - `array`
+        - `bool` or `boolean`
 
-            - `string`
-            - `number`
-            - `object`
-            - `array`
-            - `bool` or `boolean`
-
-        - `value` - The actual value of the element
-
-            - One of
-
-                - (string) - The value represented as a string
-                - (array) - The value represented as an array of elements or properties
-
-                    Note: In addition to type introspection the type of values stored in the array, the type can be also inferred from the `type` porperty of the parent element.
-
-                    - Elements
-
-                        - One of
-
-                            - ([Element]())
-                            - ([Property]())
-
-    - `oneOf` (array) - The choice of values for the element
+    - `value` - The actual value of the element
 
         - One of
 
-            - ([Element]())
-            - ([Property]())
+            - (string) - The value represented as a string
+            - (array) - The value represented as an array of elements or properties
 
-    - `ref` (string) - Reference to another element's value
+                Note: In addition to type introspection the type of values stored in the array, the type can be also inferred from the `type` porperty of the parent element.
 
+                - Elements
+
+                    - One of
+
+                        - ([Element]())
+                        - ([Property]())
+
+- `oneOf` (array) - The choice of values for the element
+
+    - One of
+
+        - ([Element]())
+        - ([Property]())
+
+- `ref` (string) - Reference to another element's value
 
 ### Property Object
 
