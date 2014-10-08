@@ -5,7 +5,7 @@ This document defines serialization formats for [MSON][] abstract syntax tree.
 
 - **Version**: 2.0
 - **Created**: 2014-07-31
-- **Updated**: 2014-10-07
+- **Updated**: 2014-10-08
 
 ## Media Types
 Base type media type is `application/vnd.mson.ast`.
@@ -74,7 +74,7 @@ Definition of an instance value type.
         - `fixed`
 
 ### Type Section (object)
-Section of a type description. The section can be any of the [Type Sections][] as described in the MSON Specification. 
+Section of a type. The section can be any of the [Type Sections][] as described in the MSON Specification. 
 
 #### Properties
 - `type` (enum[string]) - Denotes the type of the section
@@ -86,7 +86,7 @@ Section of a type description. The section can be any of the [Type Sections][] a
 
 - `content` (enum) - Content of the section based on its type
     - ([Markdown][]) - Markdown formatted content of the section, applicable for `block_description` type only
-    - (array[[Member Type][]]) - Member types, applicable for `member`, `sample`, `default` or `validation` types only
+    - (array[[Member Type][]]) - Member types, applicable for `member`, `sample` or `default` types only
 
 ### Member Type (object)
 Member Type of a structure as described in the MSON Specification. In addition, this object may also represent [Mixin][] and / or [One Of][] types.
@@ -111,7 +111,7 @@ Individual member of an `object` type structure.
 - `name` ([Property Name][]) - Name of the object property
 
 ### Property Name (object)
-Name of a property member
+Name of a property member.
 
 #### Properties
 - One Of
@@ -127,7 +127,7 @@ Individual member of an `array` or `enum` type structure.
 - `sections` (array[[Type Section][]]) - List of member's type sections
 
 ### Mixin (object)
-Mixin type. In the case of AST the Mixin type is treated as a special case of a member type. 
+Mixin type. In the case of an AST, the Mixin type is treated as a special case of a member type.
 
 #### Properties
 - `type_definition` ([Type Definition][]) - Type Name or full Type Definition of the type to be included
@@ -136,7 +136,9 @@ Mixin type. In the case of AST the Mixin type is treated as a special case of a 
 One Of type. In the case of AST the One Of type is treated as a special case of a member type. 
 
 #### Properties
-- `members` (array[[Member Type][]]) - List of mutually exclusive member types 
+- `members` (array[[Member Type][]]) - List of mutually exclusive member types.
+
+Note only Member Types of `property`, `mixin` and `oneof` are allowed in the members array.
 
 ### Value Definition (object)
 Value definition of a type instance.
