@@ -23,13 +23,13 @@ Following is description of MSON AST serializations data structures using the [M
 
 ---
 
-### Document (object)
+### Document
 Top-level MSON document or block. 
 
 #### Properties
 - `types` (array[[Named Type][]]) - List of top-level [Named Types][] described in the document
 
-### Named Type (object)
+### Named Type
 User-defined named type.
 
 #### Properties
@@ -37,7 +37,7 @@ User-defined named type.
 - `base` ([Type Definition][]) - The ancestor type definition
 - `sections` (array[[Type Section][]]) - Ordered list of type sections
 
-### Type Name (object)
+### Type Name
 Base or named type's name.
 
 #### Properties
@@ -50,20 +50,20 @@ Base or named type's name.
     - `object` (string)
     - ([Symbol][])
 
-### Symbol (object)
+### Symbol
 Type symbol (identifier).
 
 #### Properties
 - `literal` (string) - Name of the symbol
 - `variable`: `false` (boolean, default) - Boolean flag to denote [Variable Type Name][], `true` for variable type name, `false` otherwise
 
-### Type Definition (object)
+### Type Definition
 Definition of an instance value type.
 
 #### Properties
 - `typeSpecification` (object)
     - `name` ([Type Name]) - Name of the value type in an MSON instance
-    - `nestedTypes` (array[[Type Name][]]) - Array of nested value types
+    - `nestedTypes` (array[[Type Name][]]) - Array of nested value types, applicable only fot types of an `array` or `enum` base type
 
 - `attributes` (array) - List of attributes associated with the type
     - (enum[string])
@@ -73,7 +73,7 @@ Definition of an instance value type.
         - `sample`
         - `fixed`
 
-### Type Section (object)
+### Type Section
 Section of a type. The section can be any of the [Type Sections][] as described in the MSON Specification. 
 
 #### Properties
@@ -88,7 +88,7 @@ Section of a type. The section can be any of the [Type Sections][] as described 
     - ([Markdown][]) - Markdown formatted content of the section, applicable for `description` type only
     - (array[[Member Type][]]) - Member types, applicable for `member`, `sample` or `default` types only
 
-### Member Type (object)
+### Member Type
 Member Type of a structure as described in the MSON Specification. In addition, this object may also represent [Mixin][] and / or [One Of][] types.
 
 #### Properties
@@ -110,7 +110,7 @@ Individual member of an `object` type structure.
 #### Properties
 - `name` ([Property Name][]) - Name of the object property
 
-### Property Name (object)
+### Property Name
 Name of a property member.
 
 #### Properties
@@ -118,7 +118,7 @@ Name of a property member.
     - `literal` (string) - Literal name of the property
     - `variable` ([Value Definition][]) - Variable name of the property
 
-### Value Member (object)
+### Value Member
 Individual member of an `array` or `enum` type structure.
 
 #### Properties
@@ -126,13 +126,13 @@ Individual member of an `array` or `enum` type structure.
 - `valueDefinition` ([Value Definition][]) - The definition of the member's value
 - `sections` (array[[Type Section][]]) - List of member's type sections
 
-### Mixin (object)
+### Mixin
 Mixin type. In the case of an AST, the Mixin type is treated as a special case of a member type.
 
 #### Properties
 - `typeDefinition` ([Type Definition][]) - Type Name or full Type Definition of the type to be included
 
-### One Of (object)
+### One Of
 One Of type. In the case of AST the One Of type is treated as a special case of a member type. 
 
 #### Properties
@@ -140,14 +140,14 @@ One Of type. In the case of AST the One Of type is treated as a special case of 
 
 Note only Member Types of `property`, `mixin` and `oneof` are allowed in the members array.
 
-### Value Definition (object)
+### Value Definition
 Value definition of a type instance.
 
 #### Properties
 - `values` (array[[Value][]]) - List of values specified in the definition
 - `typeDefinition` ([Type Definition][]) - Type of the value
 
-### Value (object)
+### Value
 Sample or actual value of a type instance
 
 #### Properties 
