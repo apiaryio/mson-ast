@@ -164,108 +164,168 @@ Markdown formatted plain text string.
 ### MSON
 
 ```
-- id: 1
+- id: 1 (required)
 - name: A green door
 - price: 12.50 (number)
 - tags: home, green
-
+- vector (array)
+    - 1
+    - 2
+    - 3
 ```
 
 ### application/vnd.mson.ast+json
 
 ```json
-
 {
-    "types": [
+  "types": [
+    {
+      "name": null,
+      "base": {
+        "typeSpecification": {
+          "name": "object"
+        }
+      },
+      "sections": [
         {
-            "name": null,
-            "base": {
-                "typeSpecification": {
-                    "name": "object"
+          "type": "member",
+          "content": [
+            {
+              "type": "property",
+              "content": {
+                "name": {
+                  "literal": "id"
+                },
+                "valueDefinition": {
+                  "values": [
+                    {
+                      "literal": "1"
+                    }
+                  ],
+                  "typeDefinition": {
+                    "attributes": [
+                      "required"
+                    ]
+                  }
                 }
+              }
             },
-            "sections": [
-                {
+            {
+              "type": "property",
+              "content": {
+                "name": {
+                  "literal": "name"
+                },
+                "valueDefinition": {
+                  "values": [
+                    {
+                      "literal": "A green door"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "property",
+              "content": {
+                "name": {
+                  "literal": "price"
+                },
+                "valueDefinition": {
+                  "values": [
+                    {
+                      "literal": "12.50"
+                    }
+                  ],
+                  "typeDefinition": {
+                    "typeSpecification": {
+                      "name": "number"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "property",
+              "content": {
+                "name": {
+                  "literal": "tags"
+                },
+                "valueDefinition": {
+                  "values": [
+                    {
+                      "literal": "home"
+                    },
+                    {
+                      "literal": "green"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "property",
+              "content": {
+                "name": {
+                  "literal": "vector"
+                },
+                "valueDefinition": {
+                  "typeDefinition": {
+                    "typeSpecification": {
+                      "name": "array"
+                    }
+                  }
+                },
+                "sections": [
+                  {
                     "type": "member",
                     "content": [
-                        {
-                            "type": "property",
-                            "content": {
-                                "name": {
-                                    "literal": "id"
-                                },
-                                "valueDefinition": {
-                                    "values": [
-                                        {
-                                            "literal": "1"
-                                        }
-                                    ]
-                                }
-                            }
-                        },
-                        {
-                            "type": "property",
-                            "content": {
-                                "name": {
-                                    "literal": "name"
-                                },
-                                "valueDefinition": {
-                                    "values": [
-                                        {
-                                            "literal": "A green door"
-                                        }
-                                    ]
-                                }
-                            }
-                        },
-                        {
-                            "type": "property",
-                            "content": {
-                                "name": {
-                                    "literal": "price"
-                                },
-                                "valueDefinition": {
-                                    "values": [
-                                        {
-                                            "literal": "12.50"
-                                        }
-                                    ],
-                                    "typeDefinition": {
-                                        "typeSpecification": {
-                                            "name": "number"
-                                        }
-                                    }
-                                }
-                            }
+                      {
+                        "type": "value",
+                        "content": {
+                          "valueDefinition": {
+                            "values": [
+                              {
+                                "literal": "1"
+                              }
+                            ]
+                          }
                         }
-                        {
-                            "type": "property",
-                            "content": {
-                                "name": {
-                                    "literal": "tags"
-                                },
-                                "valueDefinition": {
-                                    "values": [
-                                        {
-                                            "literal": "home"
-                                        },
-                                        {
-                                            "literal": "green"
-                                        }                                        
-                                    ],
-                                    "typeDefinition": {
-                                        "type_specification": {
-                                            "name": "array"
-                                        }
-                                    }
-                                }
-                            }
+                      },
+                      {
+                        "type": "value",
+                        "content": {
+                          "valueDefinition": {
+                            "values": [
+                              {
+                                "literal": "2"
+                              }
+                            ]
+                          }
                         }
+                      },
+                      {
+                        "type": "value",
+                        "content": {
+                          "valueDefinition": {
+                            "values": [
+                              {
+                                "literal": "3"
+                              }
+                            ]
+                          }
+                        }
+                      }
                     ]
-                }
-            ]
+                  }
+                ]
+              }
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }
 ```
 
