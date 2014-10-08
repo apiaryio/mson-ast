@@ -78,14 +78,14 @@ Section of a type. The section can be any of the [Type Sections][] as described 
 
 #### Properties
 - `type` (enum[string]) - Denotes the type of the section
-    - `description` - Section is a markdown block description
+    - `blockDescription` - Section is a markdown block description
     - `member` - Section contains member type(s)
     - `sample` - Section contains sample member type(s)
     - `default` - Section contains default member type(s)
     - `validation` - Reserved for future use
 
 - `content` (enum) - Content of the section based on its type
-    - ([Markdown][]) - Markdown formatted content of the section, applicable for `description` type only
+    - ([Markdown][]) - Markdown formatted content of the section, applicable for `blockDescription` type only
     - (array[[Member Type][]]) - Member types, applicable for `member`, `sample` or `default` types only
 
 ### Member Type
@@ -122,7 +122,7 @@ Name of a property member.
 Individual member of an `array` or `enum` type structure.
 
 #### Properties
-- `description` ([Markdown][]) - Description of the member
+- `description` ([Markdown][]) - Inline description of the member type
 - `valueDefinition` ([Value Definition][]) - The definition of the member's value
 - `sections` (array[[Type Section][]]) - List of member's type sections
 
