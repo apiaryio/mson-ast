@@ -61,9 +61,9 @@ Type symbol (identifier).
 Definition of an instance value type.
 
 #### Properties
-- `type_specification` (object)
+- `typeSpecification` (object)
     - `name` ([Type Name]) - Name of the value type in an MSON instance
-    - `nested_types` (array[[Type Name][]]) - Array of nested value types
+    - `nestedTypes` (array[[Type Name][]]) - Array of nested value types
 
 - `attributes` (array) - List of attributes associated with the type
     - (enum[string])
@@ -85,7 +85,7 @@ Section of a type. The section can be any of the [Type Sections][] as described 
     - `validation` - Reserved for future use
 
 - `content` (enum) - Content of the section based on its type
-    - ([Markdown][]) - Markdown formatted content of the section, applicable for `block_description` type only
+    - ([Markdown][]) - Markdown formatted content of the section, applicable for `description` type only
     - (array[[Member Type][]]) - Member types, applicable for `member`, `sample` or `default` types only
 
 ### Member Type (object)
@@ -123,14 +123,14 @@ Individual member of an `array` or `enum` type structure.
 
 #### Properties
 - `description` ([Markdown][]) - Description of the member
-- `value_definition` ([Value Definition][]) - The definition of the member's value
+- `valueDefinition` ([Value Definition][]) - The definition of the member's value
 - `sections` (array[[Type Section][]]) - List of member's type sections
 
 ### Mixin (object)
 Mixin type. In the case of an AST, the Mixin type is treated as a special case of a member type.
 
 #### Properties
-- `type_definition` ([Type Definition][]) - Type Name or full Type Definition of the type to be included
+- `typeDefinition` ([Type Definition][]) - Type Name or full Type Definition of the type to be included
 
 ### One Of (object)
 One Of type. In the case of AST the One Of type is treated as a special case of a member type. 
@@ -145,7 +145,7 @@ Value definition of a type instance.
 
 #### Properties
 - `values` (array[[Value][]]) - List of values specified in the definition
-- `type_definition` ([Type Definition][]) - Type of the value
+- `typeDefinition` ([Type Definition][]) - Type of the value
 
 ### Value (object)
 Sample or actual value of a type instance
@@ -180,7 +180,7 @@ Markdown formatted plain text string.
         {
             "name": null,
             "base": {
-                "type_specification": {
+                "typeSpecification": {
                     "name": "object"
                 }
             },
@@ -194,7 +194,7 @@ Markdown formatted plain text string.
                                 "name": {
                                     "literal": "id"
                                 },
-                                "value_definition": {
+                                "valueDefinition": {
                                     "values": [
                                         {
                                             "literal": "1"
@@ -209,7 +209,7 @@ Markdown formatted plain text string.
                                 "name": {
                                     "literal": "name"
                                 },
-                                "value_definition": {
+                                "valueDefinition": {
                                     "values": [
                                         {
                                             "literal": "A green door"
@@ -224,14 +224,14 @@ Markdown formatted plain text string.
                                 "name": {
                                     "literal": "price"
                                 },
-                                "value_definition": {
+                                "valueDefinition": {
                                     "values": [
                                         {
                                             "literal": "12.50"
                                         }
                                     ],
-                                    "type_definition": {
-                                        "type_specification": {
+                                    "typeDefinition": {
+                                        "typeSpecification": {
                                             "name": "number"
                                         }
                                     }
@@ -244,7 +244,7 @@ Markdown formatted plain text string.
                                 "name": {
                                     "literal": "tags"
                                 },
-                                "value_definition": {
+                                "valueDefinition": {
                                     "values": [
                                         {
                                             "literal": "home"
@@ -253,7 +253,7 @@ Markdown formatted plain text string.
                                             "literal": "green"
                                         }                                        
                                     ],
-                                    "type_definition": {
+                                    "typeDefinition": {
                                         "type_specification": {
                                             "name": "array"
                                         }
