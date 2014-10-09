@@ -63,7 +63,7 @@ Definition of an instance value type.
 #### Properties
 - `typeSpecification` (object)
     - `name` ([Type Name]) - Name of the value type in an MSON instance
-    - `nestedTypes` (array[[Type Name][]]) - Array of nested value types, applicable only fot types of an `array` or `enum` base type
+    - `nestedTypes` (array[[Type Name][]]) - Array of nested value types, applicable only for types of an `array` or `enum` base type
 
 - `attributes` (array) - List of attributes associated with the type
     - (enum[string])
@@ -337,17 +337,17 @@ Markdown formatted plain text string.
 [Mixin]: https://github.com/apiaryio/mson/blob/master/MSON%20Specification.md#51-mixin-inheritance
 [One Of]: https://github.com/apiaryio/mson/blob/master/MSON%20Specification.md#52-one-of-type
 
-[Named Type]: #named-type-object
-[Type Name]: #type-name-object
-[Type Definition]: #type-definition-object
-[Type Section]: #type-section-object
-[Symbol]: #symbol-object
-[Member Type]: #member-type-object
+[Named Type]: #named-type
+[Type Name]: #type-name
+[Type Definition]: #type-definition
+[Type Section]: #type-section
+[Symbol]: #symbol
+[Member Type]: #member-type
 [Markdown]: #markdown-string
-[Value]: #value-object
-[Property Member]: #property-member-object
-[Value Member]: #value-member-object
-[Mixin]: #mixin-object
-[One Of]: #one-of-object
-[Property Name]: #property-name-object
-[Value Definition]: #value-definition-object
+[Value]: #value
+[Property Member]: #property-member
+[Value Member]: #value-member
+[Mixin]: #mixin
+[One Of]: #one-of
+[Property Name]: #property-name
+[Value Definition]: #value-definition
