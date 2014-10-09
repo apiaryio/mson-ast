@@ -1,11 +1,11 @@
 # MSON AST Serialization Media Types
-This document defines serialization formats for [MSON](https://github.com/apiaryio/mson) abstract syntax tree.
+This document defines serialization formats for [MSON][] abstract syntax tree.
 
 ## Version
 
-- **Version**: 1.0
+- **Version**: 2.0
 - **Created**: 2014-07-31
-- **Updated**: 2014-08-05
+- **Updated**: 2014-10-08
 
 ## Media Types
 Base type media type is `application/vnd.mson.ast`.
@@ -17,162 +17,337 @@ Two supported, feature-equal serialization formats are JSON and YAML:
 - `application/vnd.mson.ast+yaml`
 
 ## AST Serialization
+Following is description of MSON AST serializations data structures using the [MSON][] syntax. 
 
-### Element Object
+> **NOTE:** Refer to the [MSON Specification][] for the explanation of terms used throughout this document. 
 
-- `description` (string) - Description of the value
-- `primitive` - Primitive data type value for the element
-    - `type` (string) - The data type of the element value
+---
 
-        The type value must be of one of the following:
+### Document
+Top-level MSON document or block. 
 
-        - `string`
-        - `number`
-        - `object`
-        - `array`
-        - `bool` or `boolean`
+#### Properties
+- `types` (array[[Named Type][]]) - List of top-level [Named Types][] described in the document
 
-    - `value` - The actual value of the element
+### Named Type
+User-defined named type.
 
-        - One of
+#### Properties
+- `name` ([Type Name][]) - Name of the type being defined
+- `base` ([Type Definition][]) - The ancestor type definition
+- `sections` (array[[Type Section][]]) - Ordered list of type sections
 
-            - (string) - The value represented as a string
-            - (array) - The value represented as an array of elements or properties
+### Type Name
+Base or named type's name.
 
-                Note: In addition to type introspection the type of values stored in the array, the type can be also inferred from the `type` porperty of the parent element.
+#### Properties
+- `name` (enum)
+    - `boolean` (string)
+    - `string` (string)
+    - `number` (string)
+    - `array` (string)
+    - `enum` (string)
+    - `object` (string)
+    - ([Symbol][])
 
-                - Elements
+### Symbol
+Type symbol (identifier).
 
-                    - One of
+#### Properties
+- `literal` (string) - Name of the symbol
+- `variable`: `false` (boolean, default) - Boolean flag to denote [Variable Type Name][], `true` for variable type name, `false` otherwise
 
-                        - ([Element]())
-                        - ([Property]())
+### Type Definition
+Definition of an instance value type.
 
-- `oneOf` (array) - The choice of values for the element
+#### Properties
+- `typeSpecification` (object)
+    - `name` ([Type Name]) - Name of the value type in an MSON instance
+    - `nestedTypes` (array[[Type Name][]]) - Array of nested value types, applicable only for types of an `array` or `enum` base type
 
-    - One of
+- `attributes` (array) - List of attributes associated with the type
+    - (enum[string])
+        - `required`
+        - `optional`
+        - `default`
+        - `sample`
+        - `fixed`
 
-        - ([Element]())
-        - ([Property]())
+### Type Section
+Section of a type. The section can be any of the [Type Sections][] as described in the MSON Specification. 
 
-- `ref` (string) - Reference to another element's value
+#### Properties
+- `type` (enum[string]) - Denotes the type of the section
+    - `blockDescription` - Section is a markdown block description
+    - `member` - Section contains member type(s)
+    - `sample` - Section contains sample member type(s)
+    - `default` - Section contains default member type(s)
+    - `validation` - Reserved for future use
 
-### Property Object
+- `content` (enum) - Content of the section based on its type
+    - ([Markdown][]) - Markdown formatted content of the section, applicable for `blockDescription` type only
+    - (array[[Member Type][]]) - Member types, applicable for `member`, `sample` or `default` types only
 
-- `name` (string, required) - Name of the property
-- `required` (bool) - Boolean flag to denote required (`true`) or optional (`false`) property
-- `templated` (bool) - Boolean flag to denote whether the name is a variable (`true`) or not (`false`)
-- Inherits [Element]()
+### Member Type
+Member Type of a structure as described in the MSON Specification. In addition, this object may also represent [Mixin][] and / or [One Of][] types.
 
-## AST Model
-![AST Model Diagram](https://raw.githubusercontent.com/apiaryio/mson-ast/master/assets/astmodel.png)
+#### Properties
+- `type` (enum[string]) - Type of the member object
+    - `property` - Property Member  
+    - `value` - Value Member
+    - `mixin` - Mixin Type
+    - `oneof` - One Of Type
 
-## Example
+- `content` (enum)
+    - ([Property Member][]) - Member for `property` type
+    - ([Value Member][]) - Member for `value` type
+    - ([Mixin][]) - Member for `mixin` type
+    - ([One Of][]) - Member for `oneof` type
+
+### Property Member ([Value Member][])
+Individual member of an `object` type structure.
+
+#### Properties
+- `name` ([Property Name][]) - Name of the object property
+
+### Property Name
+Name of a property member.
+
+#### Properties
+- One Of
+    - `literal` (string) - Literal name of the property
+    - `variable` ([Value Definition][]) - Variable name of the property
+
+### Value Member
+Individual member of an `array` or `enum` type structure.
+
+#### Properties
+- `description` ([Markdown][]) - Inline description of the member type
+- `valueDefinition` ([Value Definition][]) - The definition of the member's value
+- `sections` (array[[Type Section][]]) - List of member's type sections
+
+### Mixin
+Mixin type. In the case of an AST, the Mixin type is treated as a special case of a member type.
+
+#### Properties
+- `typeDefinition` ([Type Definition][]) - Type Name or full Type Definition of the type to be included
+
+### One Of
+One Of type. In the case of AST the One Of type is treated as a special case of a member type. 
+
+#### Properties
+- `members` (array[[Member Type][]]) - List of mutually exclusive member types.
+
+Note only Member Types of `property`, `mixin` and `oneof` are allowed in the members array.
+
+### Value Definition
+Value definition of a type instance.
+
+#### Properties
+- `values` (array[[Value][]]) - List of values specified in the definition
+- `typeDefinition` ([Type Definition][]) - Type of the value
+
+### Value
+Sample or actual value of a type instance
+
+#### Properties 
+- `literal` (string) - The literal value
+- `variable`: `false` (boolean, default) - `true` to denote variable value, `false` otherwise
+
+### Markdown (string)
+Markdown formatted plain text string.
+
+---
+
+## Example 
 
 ### MSON
 
 ```
-# Object
-Hello World!
-
-## Attributes
-- id: 42 (number, required) - lorem ipsum
-- One of
-    - a: good
-    - b: bad
-- Inherits [Another]()
-- mixed_feelings
-    - One of
-        - (number)
-        - (string)
+- id: 1 (required)
+- name: A green door
+- price: 12.50 (number)
+- tags: home, green
 - vector (array)
     - 1
     - 2
     - 3
 ```
 
-### MSON AST
-`application/vnd.mson.ast+json`
+### application/vnd.mson.ast+json
 
 ```json
 {
-    "name": "Object",
-    "description": "Hello World!",
-    "primitive" : {
-        "type": "object",
-        "value": [
+  "types": [
+    {
+      "name": null,
+      "base": {
+        "typeSpecification": {
+          "name": "object"
+        }
+      },
+      "sections": [
+        {
+          "type": "member",
+          "content": [
             {
-                "name": "id",
-                "required": true,
-                "description": "description",
-                "primitive" : {
-                    "type": "number",
-                    "value": "42"
-                }
-            },
-            {
-                "oneOf" : [
+              "type": "property",
+              "content": {
+                "name": {
+                  "literal": "id"
+                },
+                "valueDefinition": {
+                  "values": [
                     {
-                        "name": "a",
-                        "required": false,
-                        "primitive" : {
-                            "value": "good"
-                        }
-                    },
-                    {
-                        "name": "b",
-                        "required": false,
-                        "primitive" : {
-                            "value": "bad"
-                        }
+                      "literal": "1"
                     }
-                ]
-            }, 
-            {
-                "reference": "Another"
+                  ],
+                  "typeDefinition": {
+                    "attributes": [
+                      "required"
+                    ]
+                  }
+                }
+              }
             },
             {
-                "name": "mixed_feelings",
-                "required": false,
-                "oneOf" : [
+              "type": "property",
+              "content": {
+                "name": {
+                  "literal": "name"
+                },
+                "valueDefinition": {
+                  "values": [
                     {
-                        "primitive" : {
-                            "type": "number",
-                        }
-                    },
-                    {
-                        "primitive" : {
-                            "type": "string",
-                        }
-                    },
-                ]
-            }
-            {
-                "name": "vector",
-                "required": false,
-                "primitive" : {
-                    "type": "array",
-                    "value": [
-                        {
-                            "primitive" : {
-                                "value": "1"
-                            }
-                        },
-                        {
-                            "primitive" : {
-                                "value": "2"
-                            }
-                        },
-                        {
-                            "primitive" : {
-                                "value": "3"
-                            }
-                        }
-                    ]
+                      "literal": "A green door"
+                    }
+                  ]
                 }
+              }
+            },
+            {
+              "type": "property",
+              "content": {
+                "name": {
+                  "literal": "price"
+                },
+                "valueDefinition": {
+                  "values": [
+                    {
+                      "literal": "12.50"
+                    }
+                  ],
+                  "typeDefinition": {
+                    "typeSpecification": {
+                      "name": "number"
+                    }
+                  }
+                }
+              }
+            },
+            {
+              "type": "property",
+              "content": {
+                "name": {
+                  "literal": "tags"
+                },
+                "valueDefinition": {
+                  "values": [
+                    {
+                      "literal": "home"
+                    },
+                    {
+                      "literal": "green"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "type": "property",
+              "content": {
+                "name": {
+                  "literal": "vector"
+                },
+                "valueDefinition": {
+                  "typeDefinition": {
+                    "typeSpecification": {
+                      "name": "array"
+                    }
+                  }
+                },
+                "sections": [
+                  {
+                    "type": "member",
+                    "content": [
+                      {
+                        "type": "value",
+                        "content": {
+                          "valueDefinition": {
+                            "values": [
+                              {
+                                "literal": "1"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "type": "value",
+                        "content": {
+                          "valueDefinition": {
+                            "values": [
+                              {
+                                "literal": "2"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "type": "value",
+                        "content": {
+                          "valueDefinition": {
+                            "values": [
+                              {
+                                "literal": "3"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
             }
-        ]
+          ]
+        }
+      ]
     }
+  ]
 }
-
 ```
+
+[MSON]: https://github.com/apiaryio/mson
+[MSON Specification]: https://github.com/apiaryio/mson/blob/master/MSON%20Specification.md
+[Type Sections]: https://github.com/apiaryio/mson/blob/master/MSON%20Specification.md#4-type-sections
+[Named Types]: https://github.com/apiaryio/mson/blob/master/MSON%20Specification.md#22-named-types
+[Variable Type Name]: https://github.com/apiaryio/mson/blob/master/MSON%20Specification.md#3521-variable-type-name
+[Mixin]: https://github.com/apiaryio/mson/blob/master/MSON%20Specification.md#51-mixin-inheritance
+[One Of]: https://github.com/apiaryio/mson/blob/master/MSON%20Specification.md#52-one-of-type
+
+[Named Type]: #named-type
+[Type Name]: #type-name
+[Type Definition]: #type-definition
+[Type Section]: #type-section
+[Symbol]: #symbol
+[Member Type]: #member-type
+[Markdown]: #markdown-string
+[Value]: #value
+[Property Member]: #property-member
+[Value Member]: #value-member
+[Mixin]: #mixin
+[One Of]: #one-of
+[Property Name]: #property-name
+[Value Definition]: #value-definition
