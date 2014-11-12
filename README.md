@@ -54,7 +54,7 @@ Base or named type's name.
 Type symbol (identifier).
 
 #### Properties
-- `literal` (string) - Name of the symbol
+- `literal` ([Literal][]) - Name of the symbol
 - `variable`: `false` (boolean, default) - Boolean flag to denote [Variable Type Name][], `true` for variable type name, `false` otherwise
 
 ### Type Definition
@@ -86,6 +86,7 @@ Section of a type. The section can be any of the [Type Sections][] as described 
 
 - `content` (enum) - Content of the section based on its type
     - ([Markdown][]) - Markdown formatted content of the section, applicable for `blockDescription` type only
+    - ([Literal][]) - Literal value for a non-structure base type, applicable for `sample` or `default` types only
     - (array[[Member Type][]]) - Member types, applicable for `member`, `sample` or `default` types only
 
 ### Member Type
@@ -115,7 +116,7 @@ Name of a property member.
 
 #### Properties
 - One Of
-    - `literal` (string) - Literal name of the property
+    - `literal` ([Literal][]) - Literal name of the property
     - `variable` ([Value Definition][]) - Variable name of the property
 
 ### Value Member
@@ -151,11 +152,14 @@ Value definition of a type instance.
 Sample or actual value of a type instance
 
 #### Properties 
-- `literal` (string) - The literal value
+- `literal` ([Literal][]) - The literal value
 - `variable`: `false` (boolean, default) - `true` to denote variable value, `false` otherwise
 
 ### Markdown (string)
 Markdown formatted plain text string.
+
+### Literal (string)
+Plain text string
 
 ---
 
