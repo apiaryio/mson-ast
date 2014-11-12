@@ -98,12 +98,14 @@ Member Type of a structure as described in the MSON Specification. In addition, 
     - `value` - Value Member
     - `mixin` - Mixin Type
     - `oneOf` - One Of Type
+    - `members` - Member Type Group
 
 - `content` (enum)
     - ([Property Member][]) - Member for `property` type
     - ([Value Member][]) - Member for `value` type
     - ([Mixin][]) - Member for `mixin` type
     - ([One Of][]) - Member for `oneOf` type
+    - ([Members][]) - Member for `members` type
 
 ### Property Member ([Value Member][])
 Individual member of an `object` type structure.
@@ -133,13 +135,16 @@ Mixin type. In the case of an AST, the Mixin type is treated as a special case o
 #### Properties
 - `typeDefinition` ([Type Definition][]) - Type Name or full Type Definition of the type to be included
 
-### One Of
-One Of type. In the case of AST the One Of type is treated as a special case of a member type. 
+### One Of ([Members][])
+One Of type. In the case of AST the One Of type is treated as a special case of a member type. List of member types will be mutually exclusive.
+
+Note only Member Types of `property`, `mixin`, `oneOf` and `members` are allowed in the members array.
+
+### Members
+Member Type Group. In the case of AST the Member Type Group is treated as a special case of a member type. Only used as a member for `oneOf` type.
 
 #### Properties
-- `members` (array[[Member Type][]]) - List of mutually exclusive member types.
-
-Note only Member Types of `property`, `mixin` and `oneOf` are allowed in the members array.
+- `members` (array[[Member Type][]]) - List of member types.
 
 ### Value Definition
 Value definition of a type instance.
