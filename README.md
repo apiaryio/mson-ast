@@ -86,8 +86,8 @@ Section of a type. The section can be any of the [Type Sections][] as described 
 
 - `content` (enum) - Content of the section based on its type
     - ([Markdown][]) - Markdown formatted content of the section, applicable for `blockDescription` type only
-    - ([Literal][]) - Literal value for a non-structure base type, applicable for `sample` or `default` types only
-    - (array[[Member Type][]]) - Member types, applicable for `member`, `sample` or `default` types only
+    - ([Literal][]) - Literal value for a type with a primitive base type (`sample` or `default` types only)
+    - (array[[Member Type][]]) - Member types for a type of a structured base type (`member`, `sample` or `default` types only)
 
 ### Member Type
 Member Type of a structure as described in the MSON Specification. In addition, this object may also represent [Mixin][] and / or [One Of][] types.
@@ -105,7 +105,7 @@ Member Type of a structure as described in the MSON Specification. In addition, 
     - ([Value Member][]) - Member for `value` type
     - ([Mixin][]) - Member for `mixin` type
     - ([One Of][]) - Member for `oneOf` type
-    - ([Members][]) - Member for `members` type
+    - ([Members][]) - Collection of member types (when type is `members`)
 
 ### Property Member ([Value Member][])
 Individual member of an `object` type structure.
@@ -141,7 +141,7 @@ One Of type. In the case of AST the One Of type is treated as a special case of 
 Note only Member Types of `property`, `mixin`, `oneOf` and `members` are allowed in the members array.
 
 ### Members
-Member Type Group. In the case of AST the Member Type Group is treated as a special case of a member type. Only used as a member for `oneOf` type.
+Member Type Group. Type representing a collection of member types. Only used as a member for `oneOf` type.
 
 #### Properties
 - `members` (array[[Member Type][]]) - List of member types.
@@ -164,7 +164,7 @@ Sample or actual value of a type instance
 Markdown formatted plain text string.
 
 ### Literal (string)
-Plain text string
+Literal value in the form of a plain-text.
 
 ---
 
@@ -353,10 +353,12 @@ Plain text string
 [Symbol]: #symbol
 [Member Type]: #member-type
 [Markdown]: #markdown-string
+[Literal]: #literal-string
 [Value]: #value
 [Property Member]: #property-member
 [Value Member]: #value-member
 [Mixin]: #mixin
 [One Of]: #one-of
+[Members]: #members
 [Property Name]: #property-name
 [Value Definition]: #value-definition
