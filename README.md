@@ -54,7 +54,7 @@ Base or named type's name.
 Type symbol (identifier).
 
 #### Properties
-- `literal` (string) - Name of the symbol
+- `literal` ([Literal][]) - Name of the symbol
 - `variable`: `false` (boolean, default) - Boolean flag to denote [Variable Type Name][], `true` for variable type name, `false` otherwise
 
 ### Type Definition
@@ -86,7 +86,8 @@ Section of a type. The section can be any of the [Type Sections][] as described 
 
 - `content` (enum) - Content of the section based on its type
     - ([Markdown][]) - Markdown formatted content of the section, applicable for `blockDescription` type only
-    - (array[[Member Type][]]) - Member types, applicable for `member`, `sample` or `default` types only
+    - ([Literal][]) - Literal value for a type with a primitive base type (`sample` or `default` types only)
+    - (array[[Member Type][]]) - Member types for a type of a structured base type (`member`, `sample` or `default` types only)
 
 ### Member Type
 Member Type of a structure as described in the MSON Specification. In addition, this object may also represent [Mixin][] and / or [One Of][] types.
@@ -96,13 +97,15 @@ Member Type of a structure as described in the MSON Specification. In addition, 
     - `property` - Property Member  
     - `value` - Value Member
     - `mixin` - Mixin Type
-    - `oneof` - One Of Type
+    - `oneOf` - One Of Type
+    - `members` - Member Type Group
 
 - `content` (enum)
     - ([Property Member][]) - Member for `property` type
     - ([Value Member][]) - Member for `value` type
     - ([Mixin][]) - Member for `mixin` type
-    - ([One Of][]) - Member for `oneof` type
+    - ([One Of][]) - Member for `oneOf` type
+    - ([Members][]) - Collection of member types (when type is `members`)
 
 ### Property Member ([Value Member][])
 Individual member of an `object` type structure.
@@ -115,7 +118,7 @@ Name of a property member.
 
 #### Properties
 - One Of
-    - `literal` (string) - Literal name of the property
+    - `literal` ([Literal][]) - Literal name of the property
     - `variable` ([Value Definition][]) - Variable name of the property
 
 ### Value Member
@@ -132,13 +135,16 @@ Mixin type. In the case of an AST, the Mixin type is treated as a special case o
 #### Properties
 - `typeDefinition` ([Type Definition][]) - Type Name or full Type Definition of the type to be included
 
-### One Of
-One Of type. In the case of AST the One Of type is treated as a special case of a member type. 
+### One Of ([Members][])
+One Of type. In the case of AST the One Of type is treated as a special case of a member type. List of member types will be mutually exclusive.
+
+Note only Member Types of `property`, `mixin`, `oneOf` and `members` are allowed in the members array.
+
+### Members
+Member Type Group. Type representing a collection of member types. Only used as a member for `oneOf` type.
 
 #### Properties
-- `members` (array[[Member Type][]]) - List of mutually exclusive member types.
-
-Note only Member Types of `property`, `mixin` and `oneof` are allowed in the members array.
+- `members` (array[[Member Type][]]) - List of member types.
 
 ### Value Definition
 Value definition of a type instance.
@@ -151,11 +157,14 @@ Value definition of a type instance.
 Sample or actual value of a type instance
 
 #### Properties 
-- `literal` (string) - The literal value
+- `literal` ([Literal][]) - The literal value
 - `variable`: `false` (boolean, default) - `true` to denote variable value, `false` otherwise
 
 ### Markdown (string)
 Markdown formatted plain text string.
+
+### Literal (string)
+Literal value in the form of a plain-text.
 
 ---
 
@@ -344,10 +353,12 @@ Markdown formatted plain text string.
 [Symbol]: #symbol
 [Member Type]: #member-type
 [Markdown]: #markdown-string
+[Literal]: #literal-string
 [Value]: #value
 [Property Member]: #property-member
 [Value Member]: #value-member
 [Mixin]: #mixin
 [One Of]: #one-of
+[Members]: #members
 [Property Name]: #property-name
 [Value Definition]: #value-definition
