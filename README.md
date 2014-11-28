@@ -1,22 +1,25 @@
-# MSON AST Serialization Media Types
+# MSON AST & Source Map Serialization Media Types
 This document defines serialization formats for [MSON][] abstract syntax tree.
 
 ## Version
 
 - **Version**: 2.0
 - **Created**: 2014-07-31
-- **Updated**: 2014-12-18
+- **Updated**: 2014-12-22
 
-## Media Types
-Base type media type is `application/vnd.mson.ast`.
+---
 
-### Serialization formats
-Two supported, feature-equal serialization formats are JSON and YAML:
+## Quick Links
 
-- `application/vnd.mson.ast+json`
-- `application/vnd.mson.ast+yaml`
++ [AST Description](#ast-description)
++ [Source map Description](#source-map-description)
++ [Media Types](#media-types)
++ [Example: JSON serialization](#example-json-serialization)
 
-## AST Serialization
+---
+
+## AST Description
+
 Following is description of MSON AST serializations data structures using the [MSON][] syntax. 
 
 > **NOTE:** Refer to the [MSON Specification][] for the explanation of terms used throughout this document. 
@@ -24,7 +27,7 @@ Following is description of MSON AST serializations data structures using the [M
 ---
 
 ### Document (object)
-Top-level MSON document or block. 
+Top-level MSON document or block.
 
 #### Properties
 - `types` (array[[Named Type][]]) - List of top-level [Named Types][] described in the document
@@ -161,9 +164,35 @@ Literal value in the form of a plain-text.
 
 ---
 
-## Example 
+## Source Map Description
 
-### MSON
+Following is the description of MSON Source map media types using the [MSON](https://github.com/apiaryio/mson) syntax.
+
+
+
+---
+
+## Media Types
+
+Base type media type is `application/vnd.mson.ast`.
+
+### Serialization formats
+
+Two supported, feature-equal serialization formats are JSON and YAML:
+
+For the [MSON AST](#ast-description)
+
++ `application/vnd.mson.ast+json`
++ `application/vnd.mson.ast+yaml`
+
+For the [MSON Source Map](#source-map-description)
+
++ `application/vnd.mson.sourcemap+json`
++ `application/vnd.mson.sourcemap+yaml`
+
+### Example: JSON Serialization
+
+Given the following [MSON][]
 
 ```
 - id: 1 (required)
@@ -176,7 +205,7 @@ Literal value in the form of a plain-text.
     - 3
 ```
 
-### application/vnd.mson.ast+json
+`application/vnd.mson.ast+json; version=2.0`
 
 ```json
 {
@@ -330,6 +359,20 @@ Literal value in the form of a plain-text.
   ]
 }
 ```
+
+`application/vnd.mson.sourcemap+json; version=2.0`
+
+
+```json
+{
+}
+```
+
+---
+
+## License
+
+MIT License. See the [LICENSE](LICENSE) file.
 
 [MSON]: https://github.com/apiaryio/mson
 [MSON Specification]: https://github.com/apiaryio/mson/blob/master/MSON%20Specification.md
