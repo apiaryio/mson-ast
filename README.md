@@ -425,6 +425,90 @@ Given the following [MSON][]
 
 ```json
 {
+  "name": [
+    [0, 16]
+  ],
+  "typeDefinition": [
+    [0, 16]
+  ],
+  "sections": [
+    [
+      {
+        "name": [
+          [18, 17]
+        ],
+        "description": [],
+        "valueDefinition": [
+          [18, 17]
+        ],
+        "sections": []
+      },
+      {
+        "name": [
+          [37, 19]
+        ],
+        "description": [],
+        "valueDefinition": [
+          [37, 19]
+        ],
+        "sections": []
+      },
+      {
+        "name": [
+          [58, 22]
+        ],
+        "description": [],
+        "valueDefinition": [
+          [58, 22]
+        ],
+        "sections": []
+      },
+      {
+        "name": [
+          [82, 18]
+        ],
+        "description": [],
+        "valueDefinition": [
+          [82, 18]
+        ],
+        "sections": []
+      },
+      {
+        "name": [
+          [102, 15]
+        ],
+        "description": [],
+        "valueDefinition": [
+          [102, 15]
+        ],
+        "sections": [
+          [
+            {
+              "description": [],
+              "valueDefinition": [
+                [123, 2]
+              ],
+              "sections": []
+            },
+            {
+              "description": [],
+              "valueDefinition": [
+                [131, 2]
+              ],
+              "sections": []
+            },
+            {
+              "description": [],
+              "valueDefinition": [
+                [137, 4]
+              ],
+              "sections": []
+            }
+          ]
+        ]
+      }
+    ]
+  ]
 }
 ```
 
