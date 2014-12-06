@@ -192,7 +192,9 @@ Literal value in the form of a plain-text.
       "name": null,
       "base": {
         "typeSpecification": {
-          "name": "object"
+          "name": {
+            "name": "object"
+          }
         }
       },
       "sections": [
@@ -212,6 +214,11 @@ Literal value in the form of a plain-text.
                     }
                   ],
                   "typeDefinition": {
+                    "typeSpecification": {
+                      "name": {
+                        "name": "string"
+                      }
+                    },
                     "attributes": [
                       "required"
                     ]
@@ -230,7 +237,14 @@ Literal value in the form of a plain-text.
                     {
                       "literal": "A green door"
                     }
-                  ]
+                  ],
+                  "typeDefinition": {
+                    "typeSpecification": {
+                      "name": {
+                        "name": "string"
+                      }
+                    }
+                  }
                 }
               }
             },
@@ -248,7 +262,9 @@ Literal value in the form of a plain-text.
                   ],
                   "typeDefinition": {
                     "typeSpecification": {
-                      "name": "number"
+                      "name": {
+                        "name": "number"
+                      }
                     }
                   }
                 }
@@ -268,7 +284,14 @@ Literal value in the form of a plain-text.
                     {
                       "literal": "green"
                     }
-                  ]
+                  ],
+                  "typeDefinition": {
+                    "typeSpecification": {
+                      "name": {
+                        "name": "array"
+                      }
+                    }
+                  }
                 }
               }
             },
@@ -281,7 +304,9 @@ Literal value in the form of a plain-text.
                 "valueDefinition": {
                   "typeDefinition": {
                     "typeSpecification": {
-                      "name": "array"
+                      "name": {
+                        "name": "array"
+                      }
                     }
                   }
                 },
@@ -297,7 +322,14 @@ Literal value in the form of a plain-text.
                               {
                                 "literal": "1"
                               }
-                            ]
+                            ],
+                            "typeDefinition": {
+                              "typeSpecification": {
+                                "name": {
+                                  "name": "string"
+                                }
+                              }
+                            }
                           }
                         }
                       },
@@ -309,7 +341,14 @@ Literal value in the form of a plain-text.
                               {
                                 "literal": "2"
                               }
-                            ]
+                            ],
+                            "typeDefinition": {
+                              "typeSpecification": {
+                                "name": {
+                                  "name": "string"
+                                }
+                              }
+                            }
                           }
                         }
                       },
@@ -321,7 +360,14 @@ Literal value in the form of a plain-text.
                               {
                                 "literal": "3"
                               }
-                            ]
+                            ],
+                            "typeDefinition": {
+                              "typeSpecification": {
+                                "name": {
+                                  "name": "string"
+                                }
+                              }
+                            }
                           }
                         }
                       }
