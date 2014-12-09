@@ -192,7 +192,9 @@ Literal value in the form of a plain-text.
       "name": null,
       "base": {
         "typeSpecification": {
-          "name": "object"
+          "name": {
+            "name": "object"
+          }
         }
       },
       "sections": [
@@ -281,7 +283,9 @@ Literal value in the form of a plain-text.
                 "valueDefinition": {
                   "typeDefinition": {
                     "typeSpecification": {
-                      "name": "array"
+                      "name": {
+                        "name": "array"
+                      }
                     }
                   }
                 },
