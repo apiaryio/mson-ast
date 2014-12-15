@@ -34,7 +34,7 @@ User-defined named type.
 
 #### Properties
 - `name` ([Type Name][]) - Name of the type being defined
-- `base` ([Type Definition][]) - The ancestor type definition
+- `typeDefinition` ([Type Definition][]) - The ancestor type definition
 - `sections` (array[[Type Section][]]) - Ordered list of type sections
 
 ### Type Name (enum)
@@ -189,7 +189,7 @@ Literal value in the form of a plain-text.
   "types": [
     {
       "name": null,
-      "base": {
+      "typeDefinition": {
         "typeSpecification": {
           "name": "object"
         }
