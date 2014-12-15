@@ -37,18 +37,17 @@ User-defined named type.
 - `base` ([Type Definition][]) - The ancestor type definition
 - `sections` (array[[Type Section][]]) - Ordered list of type sections
 
-### Type Name
+### Type Name (enum)
 Base or named type's name.
 
-#### Properties
-- `name` (enum)
-    - `boolean` (string)
-    - `string` (string)
-    - `number` (string)
-    - `array` (string)
-    - `enum` (string)
-    - `object` (string)
-    - ([Symbol][])
+#### Members
+- `boolean` (string)
+- `string` (string)
+- `number` (string)
+- `array` (string)
+- `enum` (string)
+- `object` (string)
+- ([Symbol][])
 
 ### Symbol
 Type symbol (identifier).
@@ -62,7 +61,7 @@ Definition of an instance value type.
 
 #### Properties
 - `typeSpecification` (object)
-    - `name` ([Type Name]) - Name of the value type in an MSON instance
+    - `name` ([Type Name][]) - Name of the value type in an MSON instance
     - `nestedTypes` (array[[Type Name][]]) - Array of nested value types, applicable only for types of an `array` or `enum` base type
 
 - `attributes` (array) - List of attributes associated with the type
@@ -192,9 +191,7 @@ Literal value in the form of a plain-text.
       "name": null,
       "base": {
         "typeSpecification": {
-          "name": {
-            "name": "object"
-          }
+          "name": "object"
         }
       },
       "sections": [
@@ -283,9 +280,7 @@ Literal value in the form of a plain-text.
                 "valueDefinition": {
                   "typeDefinition": {
                     "typeSpecification": {
-                      "name": {
-                        "name": "array"
-                      }
+                      "name": "array"
                     }
                   }
                 },
@@ -351,7 +346,7 @@ Literal value in the form of a plain-text.
 [One Of]: https://github.com/apiaryio/mson/blob/master/MSON%20Specification.md#52-one-of-type
 
 [Named Type]: #named-type
-[Type Name]: #type-name
+[Type Name]: #type-name-enum
 [Type Definition]: #type-definition
 [Type Section]: #type-section
 [Symbol]: #symbol
@@ -359,7 +354,7 @@ Literal value in the form of a plain-text.
 [Markdown]: #markdown-string
 [Literal]: #literal-string
 [Value]: #value
-[Property Member]: #property-member
+[Property Member]: #property-member-value-member
 [Value Member]: #value-member
 [Mixin]: #mixin
 [One Of]: #one-of
