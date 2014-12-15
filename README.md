@@ -5,7 +5,7 @@ This document defines serialization formats for [MSON][] abstract syntax tree.
 
 - **Version**: 2.0
 - **Created**: 2014-07-31
-- **Updated**: 2014-10-08
+- **Updated**: 2014-12-15
 
 ## Media Types
 Base type media type is `application/vnd.mson.ast`.
@@ -88,8 +88,8 @@ Section of a type. The section can be any of the [Type Sections][] as described 
     - ([Literal][]) - Literal value for a type with a primitive base type (`sample` or `default` types only)
     - (array[[Member Type][]]) - Member types for a type of a structured base type (`member`, `sample` or `default` types only)
 
-### Member Type
-Member Type of a structure as described in the MSON Specification. In addition, this object may also represent [Mixin][] and / or [One Of][] types.
+### Member
+Member of a structure as described in the MSON Specification. In addition, this object may also represent [Mixin][] and / or [One Of][] types.
 
 #### Properties
 - `type` (enum[string]) - Type of the member object
@@ -140,10 +140,10 @@ One Of type. In the case of AST the One Of type is treated as a special case of 
 Note only Member Types of `property`, `mixin`, `oneOf` and `members` are allowed in the members array.
 
 ### Members
-Member Type Group. Type representing a collection of member types. Only used as a member for `oneOf` type.
+Members group. Type representing a collection of member types. Only used as a member for `oneOf` type.
 
 #### Properties
-- `members` (array[[Member Type][]]) - List of member types.
+- `members` (array[[Member][]]) - List of member types.
 
 ### Value Definition
 Value definition of a type instance.
@@ -350,7 +350,7 @@ Literal value in the form of a plain-text.
 [Type Definition]: #type-definition
 [Type Section]: #type-section
 [Symbol]: #symbol
-[Member Type]: #member-type
+[Member]: #member
 [Markdown]: #markdown-string
 [Literal]: #literal-string
 [Value]: #value
