@@ -5,7 +5,7 @@ This document defines serialization formats for [MSON][] abstract syntax tree.
 
 - **Version**: 2.0
 - **Created**: 2014-07-31
-- **Updated**: 2014-12-15
+- **Updated**: 2014-12-16
 
 ## Media Types
 Base type media type is `application/vnd.mson.ast`.
@@ -23,13 +23,13 @@ Following is description of MSON AST serializations data structures using the [M
 
 ---
 
-### Document
+### Document (object)
 Top-level MSON document or block. 
 
 #### Properties
 - `types` (array[[Named Type][]]) - List of top-level [Named Types][] described in the document
 
-### Named Type
+### Named Type (object)
 User-defined named type.
 
 #### Properties
@@ -49,14 +49,14 @@ Base or named type's name.
 - `object` (string)
 - ([Symbol][])
 
-### Symbol
+### Symbol (object)
 Type symbol (identifier).
 
 #### Properties
 - `literal` ([Literal][]) - Name of the symbol
 - `variable`: `false` (boolean, default) - Boolean flag to denote [Variable Type Name][], `true` for variable type name, `false` otherwise
 
-### Type Definition
+### Type Definition (object)
 Definition of an instance value type.
 
 #### Properties
@@ -72,39 +72,48 @@ Definition of an instance value type.
         - `sample`
         - `fixed`
 
-### Type Section
+### Type Section (object)
 Section of a type. The section can be any of the [Type Sections][] as described in the MSON Specification. 
 
 #### Properties
-- `type` (enum[string]) - Denotes the type of the section
+- `class` (enum[string]) - Denotes the class of the type section
     - `blockDescription` - Section is a markdown block description
-    - `member` - Section contains member type(s)
-    - `sample` - Section contains sample member type(s)
-    - `default` - Section contains default member type(s)
+    - `memberType` - Section holds member type(s) elements
+    - `sample` - Section defines alternate value(s) for member types
+
+      The `content` is [Literal][] in the case the type is a sub-type of a primitive base type, or [Elements][] in the case of a sub-type of structured based type.
+
+    - `default` - Section defines the default value(s) for member types
+
+      Note the rules for the type of `content` property are the same as in the case of `sample` property.
+
     - `validation` - Reserved for future use
 
-- `content` (enum) - Content of the section based on its type
-    - ([Markdown][]) - Markdown formatted content of the section, applicable for `blockDescription` type only
-    - ([Literal][]) - Literal value for a type with a primitive base type (`sample` or `default` types only)
-    - (array[[Member Type][]]) - Member types for a type of a structured base type (`member`, `sample` or `default` types only)
+- `content` (enum) - Content of the section based on its class
+    - ([Markdown][]) - Markdown formatted content of the section (for class `blockDescription`)
+    - ([Literal][]) - Literal value for a sub-type of a primitive base type (for `sample` or `default` classes)
+    - ([Elements][]) - Section elements for a sub-type of a structured base type (for `memberType`, `sample` or `default` classes)
 
-### Member
-Member of a structure as described in the MSON Specification. In addition, this object may also represent [Mixin][] and / or [One Of][] types.
+### Element (object)
+An element of a type section. The element holds either a member type (`value` or `property`), [Mixin][] type, [One Of][] type or groups elements in a collection of [Elements][].
 
 #### Properties
-- `type` (enum[string]) - Type of the member object
-    - `property` - Property Member  
-    - `value` - Value Member
-    - `mixin` - Mixin Type
-    - `oneOf` - One Of Type
-    - `members` - Member Type Group
+- `class` (enum[string]) - Class of the member object
+    - `property` - Property member type
+    - `value` - Value member type
+    - `mixin` - Mixin type
+    - `oneOf` - One Of type
+    - `group` - Group of other elements
 
 - `content` (enum)
-    - ([Property Member][]) - Member for `property` type
-    - ([Value Member][]) - Member for `value` type
-    - ([Mixin][]) - Member for `mixin` type
-    - ([One Of][]) - Member for `oneOf` type
-    - ([Members][]) - Collection of member types (when type is `members`)
+    - ([Property Member][]) - Property member type (for class `property`)
+    - ([Value Member][]) - Value member type (for class `value`)
+    - ([Mixin][]) - Mixin type (for class `mixin`)
+    - ([One Of][]) - One Of type (for class `oneOf`)
+    - ([Elements][]) - Group of elements (for class `group`)
+
+### Elements (array[[Element][])
+Collection of elements.
 
 ### Property Member ([Value Member][])
 Individual member of an `object` type structure.
@@ -112,7 +121,7 @@ Individual member of an `object` type structure.
 #### Properties
 - `name` ([Property Name][]) - Name of the object property
 
-### Property Name
+### Property Name (object)
 Name of a property member.
 
 #### Properties
@@ -120,7 +129,7 @@ Name of a property member.
     - `literal` ([Literal][]) - Literal name of the property
     - `variable` ([Value Definition][]) - Variable name of the property
 
-### Value Member
+### Value Member (object)
 Individual member of an `array` or `enum` type structure.
 
 #### Properties
@@ -128,31 +137,22 @@ Individual member of an `array` or `enum` type structure.
 - `valueDefinition` ([Value Definition][]) - The definition of the member's value
 - `sections` (array[[Type Section][]]) - List of member's type sections
 
-### Mixin
-Mixin type. In the case of an AST, the Mixin type is treated as a special case of a member type.
+### Mixin ([Type Definition][])
+Mixin type. [Type Name][] or full [Type Definition][] of the type to be included.
 
-#### Properties
-- `typeDefinition` ([Type Definition][]) - Type Name or full Type Definition of the type to be included
+### One Of ([Elements][])
+One Of type. List of mutually exclusive elements.
 
-### One Of ([Members][])
-One Of type. In the case of AST the One Of type is treated as a special case of a member type. List of member types will be mutually exclusive.
+Note the only allowed [Element][] classes are are `property`, `mixin`, `oneOf` and `elements`.
 
-Note only Member Types of `property`, `mixin`, `oneOf` and `members` are allowed in the members array.
-
-### Members
-Members group. Type representing a collection of member types. Only used as a member for `oneOf` type.
-
-#### Properties
-- `members` (array[[Member][]]) - List of member types.
-
-### Value Definition
+### Value Definition (object)
 Value definition of a type instance.
 
 #### Properties
 - `values` (array[[Value][]]) - List of values specified in the definition
 - `typeDefinition` ([Type Definition][]) - Type of the value
 
-### Value
+### Value (object)
 Sample or actual value of a type instance
 
 #### Properties 
@@ -196,10 +196,10 @@ Literal value in the form of a plain-text.
       },
       "sections": [
         {
-          "type": "member",
+          "class": "memberType",
           "content": [
             {
-              "type": "property",
+              "class": "property",
               "content": {
                 "name": {
                   "literal": "id"
@@ -219,7 +219,7 @@ Literal value in the form of a plain-text.
               }
             },
             {
-              "type": "property",
+              "class": "property",
               "content": {
                 "name": {
                   "literal": "name"
@@ -234,7 +234,7 @@ Literal value in the form of a plain-text.
               }
             },
             {
-              "type": "property",
+              "class": "property",
               "content": {
                 "name": {
                   "literal": "price"
@@ -254,7 +254,7 @@ Literal value in the form of a plain-text.
               }
             },
             {
-              "type": "property",
+              "class": "property",
               "content": {
                 "name": {
                   "literal": "tags"
@@ -272,7 +272,7 @@ Literal value in the form of a plain-text.
               }
             },
             {
-              "type": "property",
+              "class": "property",
               "content": {
                 "name": {
                   "literal": "vector"
@@ -286,10 +286,10 @@ Literal value in the form of a plain-text.
                 },
                 "sections": [
                   {
-                    "type": "member",
+                    "class": "memberType",
                     "content": [
                       {
-                        "type": "value",
+                        "class": "value",
                         "content": {
                           "valueDefinition": {
                             "values": [
@@ -301,7 +301,7 @@ Literal value in the form of a plain-text.
                         }
                       },
                       {
-                        "type": "value",
+                        "class": "value",
                         "content": {
                           "valueDefinition": {
                             "values": [
@@ -313,7 +313,7 @@ Literal value in the form of a plain-text.
                         }
                       },
                       {
-                        "type": "value",
+                        "class": "value",
                         "content": {
                           "valueDefinition": {
                             "values": [
@@ -345,19 +345,19 @@ Literal value in the form of a plain-text.
 [Mixin]: https://github.com/apiaryio/mson/blob/master/MSON%20Specification.md#51-mixin-inheritance
 [One Of]: https://github.com/apiaryio/mson/blob/master/MSON%20Specification.md#52-one-of-type
 
-[Named Type]: #named-type
+[Named Type]: #named-type-object
 [Type Name]: #type-name-enum
-[Type Definition]: #type-definition
-[Type Section]: #type-section
-[Symbol]: #symbol
-[Member]: #member
+[Type Definition]: #type-definition-object
+[Type Section]: #type-section-object
+[Symbol]: #symbol-object
+[Element]: #element-object
+[Elements]: #elements-arrayelement
 [Markdown]: #markdown-string
 [Literal]: #literal-string
-[Value]: #value
+[Value]: #value-object
 [Property Member]: #property-member-value-member
-[Value Member]: #value-member
-[Mixin]: #mixin
-[One Of]: #one-of
-[Members]: #members
-[Property Name]: #property-name
-[Value Definition]: #value-definition
+[Value Member]: #value-member-object
+[Mixin]: #mixin-type-definition
+[One Of]: #one-of-member-types
+[Property Name]: #property-name-object
+[Value Definition]: #value-definition-object
