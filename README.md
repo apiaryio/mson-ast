@@ -5,7 +5,7 @@ This document defines serialization formats for [MSON][] abstract syntax tree.
 
 - **Version**: 2.0
 - **Created**: 2014-07-31
-- **Updated**: 2014-12-16
+- **Updated**: 2014-12-18
 
 ## Media Types
 Base type media type is `application/vnd.mson.ast`.
@@ -80,13 +80,7 @@ Section of a type. The section can be any of the [Type Sections][] as described 
     - `blockDescription` - Section is a markdown block description
     - `memberType` - Section holds member type(s) elements
     - `sample` - Section defines alternate value(s) for member types
-
-      The `content` is [Literal][] in the case the type is a sub-type of a primitive base type, or [Elements][] in the case of a sub-type of structured based type.
-
     - `default` - Section defines the default value(s) for member types
-
-      Note the rules for the type of `content` property are the same as in the case of `sample` property.
-
     - `validation` - Reserved for future use
 
 - `content` (enum) - Content of the section based on its class
@@ -138,7 +132,7 @@ Individual member of an `array` or `enum` type structure.
 - `sections` (array[[Type Section][]]) - List of member's type sections
 
 ### Mixin ([Type Definition][])
-Mixin type. [Type Name][] or full [Type Definition][] of the type to be included.
+Mixin type.
 
 ### One Of ([Elements][])
 One Of type. List of mutually exclusive elements.
@@ -358,6 +352,6 @@ Literal value in the form of a plain-text.
 [Property Member]: #property-member-value-member
 [Value Member]: #value-member-object
 [Mixin]: #mixin-type-definition
-[One Of]: #one-of-member-types
+[One Of]: #one-of-elements
 [Property Name]: #property-name-object
 [Value Definition]: #value-definition-object
