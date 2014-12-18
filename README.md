@@ -137,7 +137,7 @@ Mixin type.
 ### One Of ([Elements][])
 One Of type. List of mutually exclusive elements.
 
-Note the only allowed [Element][] classes are are `property`, `mixin`, `oneOf` and `elements`.
+Note the only allowed [Element][] classes are are `property`, `mixin`, `oneOf` and `group`.
 
 ### Value Definition (object)
 Value definition of a type instance.
