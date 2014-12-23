@@ -180,9 +180,9 @@ This contains the information about the characters positions in the source.
 Source map of the [Named Type][]
 
 #### Properties
-+ `name` ([Source Map][]) - Source map of name of the type
-+ `typeDefinition` ([Type Definition Source Map][]) - Source map of ancestor type definition
-+ `sections` (array[[Type Section Source Map][]]) - Ordered array of type section source maps
+- `name` ([Source Map][]) - Source map of name of the type
+- `typeDefinition` ([Type Definition Source Map][]) - Source map of ancestor type definition
+- `sections` (array[[Type Section Source Map][]]) - Ordered array of type section source maps
 
 ### Type Definition Source Map ([Source Map][])
 Source map of the [Type Definition][]
@@ -191,18 +191,18 @@ Source map of the [Type Definition][]
 Source map of the [Type Section][]
 
 #### Members
-+ ([Source Map][]) - Source map of content for `blockDescription` or a literal value of `sample` and `default` classes
-+ (array[[Element Source Map][]]) - Ordered array of elements (`memberType`, `sample` or `default` classes only)
+- ([Source Map][]) - Source map of content for `blockDescription` or a literal value of `sample` and `default` classes
+- (array[[Element Source Map][]]) - Ordered array of elements (`memberType`, `sample` or `default` classes only)
 
 ### Element Source Map (enum)
 Source map of the [Element][]
 
 #### Members
-+ ([Property Member Source Map][]) - Source map for `property` class
-+ ([Value Member Source Map][]) - Source map for `value` class
-+ ([Mixin Source Map][]) - Source map for `mixin` class
-+ ([One Of Source Map][]) - Source map for `oneOf` class
-+ ([Elements Source Map][]) - Source map for `group` class
+- ([Property Member Source Map][]) - Source map for `property` class
+- ([Value Member Source Map][]) - Source map for `value` class
+- ([Mixin Source Map][]) - Source map for `mixin` class
+- ([One Of Source Map][]) - Source map for `oneOf` class
+- ([Elements Source Map][]) - Source map for `group` class
 
 ### Elements Source Map (array[[Element Source Map][]])
 Source map of the [Elements][]
@@ -211,15 +211,15 @@ Source map of the [Elements][]
 Source map of the [Property Member][]
 
 #### Properties
-+ `name` ([Source Map][]) - Source map of the property name
+- `name` ([Source Map][]) - Source map of the property name
 
 ### Value Member Source Map (object)
 Source map of the [Value Member][]
 
 #### Properties
-+ `description` ([Source Map][]) - Source map of inline description
-+ `valueDefinition` ([Source Map][]) - Source map of member's value definition
-+ `sections` (array[[Type Section Source Map][]]) - List of member's type section source maps
+- `description` ([Source Map][]) - Source map of inline description
+- `valueDefinition` ([Source Map][]) - Source map of member's value definition
+- `sections` (array[[Type Section Source Map][]]) - List of member's type section source maps
 
 ### Mixin Source Map ([Type Definition Source Map][])
 Source map of the [Mixin][]
@@ -418,7 +418,6 @@ Given the following [MSON][]
 ```
 
 `application/vnd.mson.sourcemap+json; version=2.0`
-
 
 ```json
 {
