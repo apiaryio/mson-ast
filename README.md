@@ -168,16 +168,13 @@ Literal value in the form of a plain-text.
 
 Following is the description of MSON Source map media types using the [MSON][] syntax.
 
-### Source Map
-An example source map.
+### Source Map (array)
+This contains the information about the characters positions in the source.
 
-- (array)
-  - (array)
-    - 1219 (number) - Zero-based index of the character position of the beginning of the source
-    - 30 (number) - Length of the source
-  - (array)
-    - 1261 (number)
-    - 175 (number)
+#### Items
+- (array, fixed)
+    - *1219* (number) - Zero-based index of the character position of the beginning of the source
+    - *30* (number) - Length of the source
 
 ### Named Type Source Map (object)
 Source map of the [Named Type][]
@@ -185,7 +182,7 @@ Source map of the [Named Type][]
 #### Properties
 + `name` ([Source Map][]) - Source map of name of the type
 + `typeDefinition` ([Type Definition Source Map][]) - Source map of ancestor type definition
-+ `sections` (array[[Type Section Source Map][]]) - Ordered array of type sections
++ `sections` (array[[Type Section Source Map][]]) - Ordered array of type section source maps
 
 ### Type Definition Source Map ([Source Map][])
 Source map of the [Type Definition][]
@@ -222,7 +219,7 @@ Source map of the [Value Member][]
 #### Properties
 + `description` ([Source Map][]) - Source map of inline description
 + `valueDefinition` ([Source Map][]) - Source map of member's value definition
-+ `sections` (array[[Type Section Source Map][]]) - List of member's type sections
++ `sections` (array[[Type Section Source Map][]]) - List of member's type section source maps
 
 ### Mixin Source Map ([Type Definition Source Map][])
 Source map of the [Mixin][]
@@ -543,12 +540,13 @@ MIT License. See the [LICENSE](LICENSE) file.
 [Property Name]: #property-name-object
 [Value Definition]: #value-definition-object
 
-[Source Map]: #source-map
+[Source Map]: #source-map-array
 [Named Type Source Map]: #named-type-source-map-object
+[Type Definition Source Map]: #type-definition-source-map-source-map
 [Type Section Source Map]: #type-section-source-map-enum
-[Member Type Source Map]: #member-type-source-map-enum
+[Element Source Map]: #element-source-map-enum
 [Property Member Source Map]: #property-member-source-map-value-member-source-map
 [Value Member Source Map]: #value-member-source-map
 [Mixin Source Map]: #mixin-source-map-source-map
-[One Of Source Map]: #one-of-source-map-members-source-map
-[Members Source Map]: #members-source-map
+[One Of Source Map]: #one-of-source-map-elements-source-map
+[Elements Source Map]: #elements-source-map-array-element-source-map
