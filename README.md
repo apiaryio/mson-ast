@@ -1,30 +1,33 @@
-# MSON AST Serialization Media Types
+# MSON AST & Source Map Serialization Media Types
 This document defines serialization formats for [MSON][] abstract syntax tree.
 
 ## Version
 
 - **Version**: 2.0
 - **Created**: 2014-07-31
-- **Updated**: 2014-12-18
+- **Updated**: 2014-12-22
 
-## Media Types
-Base type media type is `application/vnd.mson.ast`.
+---
 
-### Serialization formats
-Two supported, feature-equal serialization formats are JSON and YAML:
+## Quick Links
 
-- `application/vnd.mson.ast+json`
-- `application/vnd.mson.ast+yaml`
++ [AST Description](#ast-description)
++ [Source map Description](#source-map-description)
++ [Media Types](#media-types)
++ [Example: JSON serialization](#example-json-serialization)
 
-## AST Serialization
-Following is description of MSON AST serializations data structures using the [MSON][] syntax. 
+---
 
-> **NOTE:** Refer to the [MSON Specification][] for the explanation of terms used throughout this document. 
+## AST Description
+
+Following is description of MSON AST serializations data structures using the [MSON][] syntax.
+
+> **NOTE:** Refer to the [MSON Specification][] for the explanation of terms used throughout this document.
 
 ---
 
 ### Document (object)
-Top-level MSON document or block. 
+Top-level MSON document or block.
 
 #### Properties
 - `types` (array[[Named Type][]]) - List of top-level [Named Types][] described in the document
@@ -73,7 +76,7 @@ Definition of an instance value type.
         - `fixed`
 
 ### Type Section (object)
-Section of a type. The section can be any of the [Type Sections][] as described in the MSON Specification. 
+Section of a type. The section can be any of the [Type Sections][] as described in the MSON Specification.
 
 #### Properties
 - `class` (enum[string]) - Denotes the class of the type section
@@ -149,7 +152,7 @@ Value definition of a type instance.
 ### Value (object)
 Sample or actual value of a type instance
 
-#### Properties 
+#### Properties
 - `literal` ([Literal][]) - The literal value
 - `variable`: `false` (boolean, default) - `true` to denote variable value, `false` otherwise
 
@@ -161,9 +164,92 @@ Literal value in the form of a plain-text.
 
 ---
 
-## Example 
+## Source Map Description
 
-### MSON
+Following is the description of MSON Source map media types using the [MSON][] syntax.
+
+### Source Map (array)
+This contains the information about the characters positions in the source.
+
+#### Items
+- (array, fixed)
+    - *1219* (number) - Zero-based index of the character position of the beginning of the source
+    - *30* (number) - Length of the source
+
+### Named Type Source Map (object)
+Source map of the [Named Type][]
+
+#### Properties
+- `name` ([Source Map][]) - Source map of name of the type
+- `typeDefinition` ([Type Definition Source Map][]) - Source map of ancestor type definition
+- `sections` (array[[Type Section Source Map][]]) - Ordered array of type section source maps
+
+### Type Definition Source Map ([Source Map][])
+Source map of the [Type Definition][]
+
+### Type Section Source Map (enum)
+Source map of the [Type Section][]
+
+#### Members
+- ([Source Map][]) - Source map of content for `blockDescription` or a literal value of `sample` and `default` classes
+- (array[[Element Source Map][]]) - Ordered array of elements (`memberType`, `sample` or `default` classes only)
+
+### Element Source Map (enum)
+Source map of the [Element][]
+
+#### Members
+- ([Property Member Source Map][]) - Source map for `property` class
+- ([Value Member Source Map][]) - Source map for `value` class
+- ([Mixin Source Map][]) - Source map for `mixin` class
+- ([One Of Source Map][]) - Source map for `oneOf` class
+- ([Elements Source Map][]) - Source map for `group` class
+
+### Elements Source Map (array[[Element Source Map][]])
+Source map of the [Elements][]
+
+### Property Member Source Map ([Value Member Source Map][])
+Source map of the [Property Member][]
+
+#### Properties
+- `name` ([Source Map][]) - Source map of the property name
+
+### Value Member Source Map (object)
+Source map of the [Value Member][]
+
+#### Properties
+- `description` ([Source Map][]) - Source map of inline description
+- `valueDefinition` ([Source Map][]) - Source map of member's value definition
+- `sections` (array[[Type Section Source Map][]]) - List of member's type section source maps
+
+### Mixin Source Map ([Type Definition Source Map][])
+Source map of the [Mixin][]
+
+### One Of Source Map ([Elements Source Map][])
+Source map of the [One Of][]
+
+---
+
+## Media Types
+
+Base type media type is `application/vnd.mson.ast`.
+
+### Serialization formats
+
+Two supported, feature-equal serialization formats are JSON and YAML:
+
+For the [MSON AST](#ast-description)
+
++ `application/vnd.mson.ast+json`
++ `application/vnd.mson.ast+yaml`
+
+For the [MSON Source Map](#source-map-description)
+
++ `application/vnd.mson.sourcemap+json`
++ `application/vnd.mson.sourcemap+yaml`
+
+### Example: JSON Serialization
+
+Given the following [MSON][]
 
 ```
 - id: 1 (required)
@@ -176,7 +262,7 @@ Literal value in the form of a plain-text.
     - 3
 ```
 
-### application/vnd.mson.ast+json
+`application/vnd.mson.ast+json; version=2.0`
 
 ```json
 {
@@ -331,6 +417,103 @@ Literal value in the form of a plain-text.
 }
 ```
 
+`application/vnd.mson.sourcemap+json; version=2.0`
+
+```json
+{
+  "name": [
+    [0, 16]
+  ],
+  "typeDefinition": [
+    [0, 16]
+  ],
+  "sections": [
+    [
+      {
+        "name": [
+          [18, 17]
+        ],
+        "description": [],
+        "valueDefinition": [
+          [18, 17]
+        ],
+        "sections": []
+      },
+      {
+        "name": [
+          [37, 19]
+        ],
+        "description": [],
+        "valueDefinition": [
+          [37, 19]
+        ],
+        "sections": []
+      },
+      {
+        "name": [
+          [58, 22]
+        ],
+        "description": [],
+        "valueDefinition": [
+          [58, 22]
+        ],
+        "sections": []
+      },
+      {
+        "name": [
+          [82, 18]
+        ],
+        "description": [],
+        "valueDefinition": [
+          [82, 18]
+        ],
+        "sections": []
+      },
+      {
+        "name": [
+          [102, 15]
+        ],
+        "description": [],
+        "valueDefinition": [
+          [102, 15]
+        ],
+        "sections": [
+          [
+            {
+              "description": [],
+              "valueDefinition": [
+                [123, 2]
+              ],
+              "sections": []
+            },
+            {
+              "description": [],
+              "valueDefinition": [
+                [131, 2]
+              ],
+              "sections": []
+            },
+            {
+              "description": [],
+              "valueDefinition": [
+                [137, 4]
+              ],
+              "sections": []
+            }
+          ]
+        ]
+      }
+    ]
+  ]
+}
+```
+
+---
+
+## License
+
+MIT License. See the [LICENSE](LICENSE) file.
+
 [MSON]: https://github.com/apiaryio/mson
 [MSON Specification]: https://github.com/apiaryio/mson/blob/master/MSON%20Specification.md
 [Type Sections]: https://github.com/apiaryio/mson/blob/master/MSON%20Specification.md#4-type-sections
@@ -355,3 +538,14 @@ Literal value in the form of a plain-text.
 [One Of]: #one-of-elements
 [Property Name]: #property-name-object
 [Value Definition]: #value-definition-object
+
+[Source Map]: #source-map-array
+[Named Type Source Map]: #named-type-source-map-object
+[Type Definition Source Map]: #type-definition-source-map-source-map
+[Type Section Source Map]: #type-section-source-map-enum
+[Element Source Map]: #element-source-map-enum
+[Property Member Source Map]: #property-member-source-map-value-member-source-map
+[Value Member Source Map]: #value-member-source-map
+[Mixin Source Map]: #mixin-source-map-source-map
+[One Of Source Map]: #one-of-source-map-elements-source-map
+[Elements Source Map]: #elements-source-map-array-element-source-map
