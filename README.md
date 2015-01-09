@@ -109,7 +109,7 @@ An element of a type section. The element holds either a member type (`value` or
     - ([One Of][]) - One Of type (for class `oneOf`)
     - ([Elements][]) - Group of elements (for class `group`)
 
-### Elements (array[[Element][])
+### Elements (array[[Element][]])
 Collection of elements.
 
 ### Property Member ([Value Member][])
