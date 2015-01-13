@@ -109,7 +109,7 @@ An element of a type section. The element holds either a member type (`value` or
     - ([One Of][]) - One Of type (for class `oneOf`)
     - ([Elements][]) - Group of elements (for class `group`)
 
-### Elements (array[[Element][])
+### Elements (array[[Element][]])
 Collection of elements.
 
 ### Property Member ([Value Member][])
@@ -181,11 +181,8 @@ Source map of the [Named Type][]
 
 #### Properties
 - `name` ([Source Map][]) - Source map of name of the type
-- `typeDefinition` ([Type Definition Source Map][]) - Source map of ancestor type definition
+- `typeDefinition` ([Source Map][]) - Source map of ancestor type definition
 - `sections` (array[[Type Section Source Map][]]) - Ordered array of type section source maps
-
-### Type Definition Source Map ([Source Map][])
-Source map of the [Type Definition][]
 
 ### Type Section Source Map (enum)
 Source map of the [Type Section][]
@@ -221,7 +218,7 @@ Source map of the [Value Member][]
 - `valueDefinition` ([Source Map][]) - Source map of member's value definition
 - `sections` (array[[Type Section Source Map][]]) - List of member's type section source maps
 
-### Mixin Source Map ([Type Definition Source Map][])
+### Mixin Source Map ([Source Map][])
 Source map of the [Mixin][]
 
 ### One Of Source Map ([Elements Source Map][])
@@ -541,7 +538,6 @@ MIT License. See the [LICENSE](LICENSE) file.
 
 [Source Map]: #source-map-array
 [Named Type Source Map]: #named-type-source-map-object
-[Type Definition Source Map]: #type-definition-source-map-source-map
 [Type Section Source Map]: #type-section-source-map-enum
 [Element Source Map]: #element-source-map-enum
 [Property Member Source Map]: #property-member-source-map-value-member-source-map
