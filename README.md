@@ -359,4 +359,4 @@ MIT License. See the [LICENSE](LICENSE) file.
 [One Of]: #one-of-elements
 [Property Name]: #property-name-object
 [Value Definition]: #value-definition-object
-[Source Map Definition]: Source%Map.md
+[Source Map Definition]: Source%20Map.md
