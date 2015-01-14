@@ -193,4 +193,4 @@ Two supported, feature-equal, serialization formats are JSON and YAML:
 [Value Member Source Map]: #value-member-source-map
 [Mixin Source Map]: #mixin-source-map-source-map
 [One Of Source Map]: #one-of-source-map-elements-source-map
-[Elements Source Map]: #elements-source-map-array-element-source-map
+[Elements Source Map]: #elements-source-map-arrayelement-source-map
