@@ -1,8 +1,13 @@
-# Source Map
+# MSON AST Source Map
 This document defines serialization formats for [MSON][] AST Source Map.
 
 ## Version
-Refer to the [MSON AST Definition](README.md) – the version of the Source Map conforms to the version of MSON AST.
+Refer to the [MSON AST Definition][] – the version of the Source Map conforms to the version of MSON AST.
+
+## Quick Links
++ [Source Map Definition](#source-map-definition)
++ [Media Types](#media-types)
++ [Example: JSON serialization](#example-json-serialization)
 
 ## Source Map Definition
 Following is the description of MSON Source map media types using the [MSON][] syntax.
@@ -63,8 +68,10 @@ Source map of the [Mixin][]
 ### One Of Source Map ([Elements Source Map][])
 Source map of the [One Of][]
 
-## Serialization formats
+## Media Types
+The Base type media type is `application/vnd.mson.sourcemap`.
 
+### Serialization formats
 Two supported, feature-equal, serialization formats are JSON and YAML:
 
 + `application/vnd.mson.sourcemap+json`
@@ -163,7 +170,10 @@ Two supported, feature-equal, serialization formats are JSON and YAML:
 }
 ```
 
+> **NOTE:** This example uses the same MSON AST as used in the [MSON AST Definition][] example.
+
 [MSON]: https://github.com/apiaryio/mson
+[MSON AST Definition]: README.md
 
 [Named Type]: README.md#named-type-object
 [Type Section]: README.md#type-section-object

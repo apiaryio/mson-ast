@@ -1,21 +1,18 @@
-# MSON AST & Source Map Serialization Media Types
+# MSON AST & Source Map
 This document defines serialization formats for [MSON][] abstract syntax tree.
+For the definition of MSON AST Source Map see the [MSON AST Source Map definition][Source Map Definition].
 
 ## Version
-
 - **Version**: 2.0
 - **Created**: 2014-07-31
 - **Updated**: 2014-12-22
 
 ## Quick Links
-
 + [AST Definition](#ast-definition)
 + [Media Types](#media-types)
 + [Example: JSON serialization](#example-json-serialization)
-+ [Source Map Definition](Source%Map.md)
 
 ## AST Definition
-
 Following is the definition of MSON AST serializations data structures using the [MSON][] syntax.
 
 > **NOTE:** Refer to the [MSON Specification][] for the explanation of terms used throughout this document.
@@ -156,20 +153,16 @@ Markdown formatted plain text string.
 ### Literal (string)
 Literal value in the form of a plain-text.
 
-
 ## Media Types
-
-Base type media type is `application/vnd.mson.ast`.
+The Base type media type is `application/vnd.mson.ast`.
 
 ### Serialization formats
-
 Two supported, feature-equal, serialization formats are JSON and YAML:
 
 + `application/vnd.mson.ast+json`
 + `application/vnd.mson.ast+yaml`
 
 ### Example: JSON Serialization
-
 Given the following [MSON][]
 
 ```
@@ -366,3 +359,4 @@ MIT License. See the [LICENSE](LICENSE) file.
 [One Of]: #one-of-elements
 [Property Name]: #property-name-object
 [Value Definition]: #value-definition-object
+[Source Map Definition]: Source%Map.md
