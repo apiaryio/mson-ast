@@ -13,12 +13,14 @@ Refer to the [MSON AST Definition][] – the version of the Source Map conforms 
 Following is the description of MSON Source map media types using the [MSON][] syntax.
 
 ### Source Map (array)
-This contains the information about the characters positions in the source.
+Set of indices to source code blocks. The blocks may be non-continuous.
+
+Each block is defined by a zero-based index of its first character and the number of following characters.
 
 #### Items
-- (array, fixed)
-- *1219* (number) - Zero-based index of the character position of the beginning of the source
-- *30* (number) - Length of the source
+- (array, fixed) - A tuple defining position of a block in the source code
+    - *1219* (number) - Zero-based index of the first character
+    - *30* (number) - Number of the characters in the block
 
 ### Named Type Source Map (object)
 Source map of the [Named Type][]
