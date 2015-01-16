@@ -154,7 +154,7 @@ Markdown formatted plain text string.
 Literal value in the form of a plain-text.
 
 ## Media Types
-The Base type media type is `application/vnd.mson.ast`.
+The base type media type is `application/vnd.mson.ast`.
 
 ### Serialization formats
 Two supported, feature-equal, serialization formats are JSON and YAML:
