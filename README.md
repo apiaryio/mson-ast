@@ -2,6 +2,12 @@
 This document defines serialization formats for [MSON][] abstract syntax tree.
 For the definition of MSON AST Source Map see the [MSON AST Source Map definition][Source Map Definition].
 
+## Deprecation Notice
+
+As of 2015-08-10 the AST is deprecated and should not be used for new development. The MSON AST will be superseded by [Data Structure Refract Namespace](https://github.com/refractproject/refract-spec/blob/master/namespaces/data-structure-namespace.md). The Data Structure Refract Namespace will be offered by API Blueprint parser harness – [Drafter](https://github.com/apiaryio/drafter).
+
+If you are relying on MSON AST please contact [@zdne](mailto:z@apiary.io) as soon as possible.
+
 ## Version
 - **Version**: 2.0
 - **Created**: 2014-07-31
